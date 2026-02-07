@@ -1,5 +1,13 @@
+@if (isAddingNewTask) {
+  <app-add-new-todo
+    [selectedUserId]="selectedUser"
+    (cancelTask)="onCancelTask()"
+    (addTodoTask)="onSubmitNewTask($event)"
+  />
+}
+
 <h2>{{ todoSubTitle }}</h2>
-<button>Add New ToDo Task</button>
+<button (click)="onStartAddNewToDo()">Add New ToDo Task</button>
 
 <ul>
   @for (task of selectedUserTasks; track task.taskId) {
