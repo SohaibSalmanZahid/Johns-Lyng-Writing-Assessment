@@ -1,18 +1,34 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { type User } from './user.model';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { AddUser } from './add-user/add-user';
+import { DUMMY_USERS } from './DUMMY_USERS';
+import { UsersList } from './users-list/users-list';
+import { UserModel } from './user.model';
+
 @Component({
-  selector: 'app-users',
-  imports: [],
+  selector: 'app-user',
+  imports: [AddUser, UsersList],
   templateUrl: './users.html',
   styleUrl: './users.css',
 })
 export class Users {
-  // @Input({ required: true }) userId!: string;
-  // @Input({ required: true }) userName!: string;
-  @Input({ required: true }) user!: User;
-  @Output() selectedUser = new EventEmitter<string>();
+  users = DUMMY_USERS;
+  selectedUser = this.users[0];
 
-  onSelectedUser() {
-    this.selectedUser.emit(this.user.userId);
+  @Output() currentUser = new EventEmitter();
+
+  onNewUser(username: string) {
+    this.users.push({
+      userId: new Date().getMilliseconds().toString(),
+      userName: username,
+    });
+  }
+
+  onSelectUser(user: UserModel) {
+    console.log('User was clicked with an id: ' + user.userId);
+    const newuser = this.users.find((nuser) => nuser.userId === user.userId);
+    if (newuser) {
+      this.selectedUser = newuser;
+      this.currentUser.emit(user);
+    }
   }
 }

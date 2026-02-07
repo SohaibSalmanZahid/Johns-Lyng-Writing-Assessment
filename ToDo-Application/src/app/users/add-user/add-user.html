@@ -1,0 +1,9 @@
+<form (ngSubmit)="onAddNewUser()">
+  <p>
+    <label for="username">Add User Name:</label>
+    <input id="username" name="username" type="text" [(ngModel)]="enteredUsername" />
+  </p>
+  <p>
+    <button type="submit">Add New User</button>
+  </p>
+</form>

@@ -1,5 +1,8 @@
-<div>
-  <button (click)="onSelectedUser()">
-    <p>{{ user.userName }}</p>
-  </button>
-</div>
+<app-add-user (username)="onNewUser($event)" />
+
+<ul class="button-group">
+  <h3>Users</h3>
+  @for (user of users; track user.userId) {
+    <app-users-list [user]="user" (selectedUser)="onSelectUser($event)" />
+  }
+</ul>
