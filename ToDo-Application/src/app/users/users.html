@@ -1,8 +1,10 @@
 <app-add-user (username)="onNewUser($event)" />
 
-<ul class="button-group">
-  <h3>Users</h3>
-  @for (user of users; track user.userId) {
-    <app-users-list [user]="user" (selectedUser)="onSelectUser($event)" />
-  }
-</ul>
+@if (userAvailable > 0) {
+  <ul class="button-group">
+    <h3>User List:</h3>
+    @for (user of users; track user.userId) {
+      <app-users-list [user]="user" (selectedUser)="onSelectUser($event)" />
+    }
+  </ul>
+}

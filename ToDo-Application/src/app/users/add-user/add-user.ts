@@ -13,7 +13,9 @@ export class AddUser {
   enteredUsername = '';
 
   onAddNewUser() {
-    this.username.emit(this.enteredUsername);
+    if (this.enteredUsername.trim() !== '') {
+      this.username.emit(this.enteredUsername);
+    }
     this.enteredUsername = '';
   }
 }

@@ -12,11 +12,15 @@
   </aside>
   <main class="content">
     <div class="content-inner">
-      <app-todos
-        [userName]="selectedUser.userName"
-        [userId]="selectedUser.userId"
-        [selectedUser]="selectedUser.userId"
-      />
+      @if (selectedUser) {
+        <app-todos
+          [userName]="selectedUser.userName"
+          [userId]="selectedUser.userId"
+          [selectedUser]="selectedUser.userId"
+        />
+      } @else {
+        <h4>Select a user to continue!</h4>
+      }
     </div>
   </main>
 </div>

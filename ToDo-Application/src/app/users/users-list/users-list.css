@@ -10,6 +10,7 @@ button {
   cursor: pointer;
   width: 100%;
   min-width: 10rem;
+  margin-top: 5px;
   border: 1px solid #c7d6ff;
   border-radius: 12px;
 }

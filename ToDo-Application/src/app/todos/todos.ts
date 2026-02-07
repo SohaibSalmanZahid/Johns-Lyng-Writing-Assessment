@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Todo } from './todo/todo';
-import { DUMMY_TODOS } from './DUMMY_TODOS';
 import { AddNewTodo } from './add-new-todo/add-new-todo';
-import { NewToDo } from './todo.model';
+import { NewToDo, ToDoTask } from './todo.model';
 
 @Component({
   selector: 'app-todos',
@@ -16,7 +15,7 @@ export class Todos {
   @Input({ required: true }) selectedUser!: string;
   isAddingNewTask = false;
 
-  tasks = DUMMY_TODOS;
+  tasks: ToDoTask[] = [];
 
   get todoSubTitle() {
     return this.userName + "'s ToDo List: ";

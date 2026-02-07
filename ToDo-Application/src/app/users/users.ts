@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AddUser } from './add-user/add-user';
-import { DUMMY_USERS } from './DUMMY_USERS';
 import { UsersList } from './users-list/users-list';
 import { UserModel } from './user.model';
 
@@ -11,10 +10,14 @@ import { UserModel } from './user.model';
   styleUrl: './users.css',
 })
 export class Users {
-  users = DUMMY_USERS;
-  selectedUser = this.users[0];
+  users: UserModel[] = [];
+  selectedUser?: UserModel;
 
   @Output() currentUser = new EventEmitter();
+
+  get userAvailable() {
+    return this.users.length;
+  }
 
   onNewUser(username: string) {
     this.users.push({

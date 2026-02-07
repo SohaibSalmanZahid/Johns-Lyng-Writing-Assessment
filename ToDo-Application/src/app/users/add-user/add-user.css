@@ -1,0 +1,36 @@
+form {
+  width: 100%;
+}
+
+p {
+  margin: 0 0 12px;
+}
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid #d1d5db;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 14px;
+  border: none;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #1e40af;
+}

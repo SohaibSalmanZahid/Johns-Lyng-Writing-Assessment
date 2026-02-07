@@ -1,6 +1,5 @@
 import { Component, signal } from '@angular/core';
 import { Header } from './header/header';
-import { DUMMY_USERS } from './users/DUMMY_USERS';
 import { Todos } from './todos/todos';
 import { Users } from './users/users';
 import { UserModel } from './users/user.model';
@@ -12,11 +11,9 @@ import { UserModel } from './users/user.model';
   styleUrl: './app.css',
 })
 export class App {
-  users = DUMMY_USERS;
-  selectedUser = this.users[0];
+  selectedUser?: UserModel;
 
   onSelectUser(currUser: UserModel) {
-    console.log('User was clicked with an id: ' + currUser.userId);
     this.selectedUser = currUser;
   }
 }
