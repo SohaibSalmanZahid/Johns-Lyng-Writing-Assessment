@@ -4,7 +4,7 @@
 <ul>
   @for (task of selectedUserTasks; track task.taskId) {
     <li>
-      <app-todo [todoTask]="task" />
+      <app-todo [todoTask]="task" (taskCompleted)="onCompleteTask($event)" />
     </li>
   }
 </ul>

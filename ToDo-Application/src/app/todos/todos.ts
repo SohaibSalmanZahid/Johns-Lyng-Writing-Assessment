@@ -22,4 +22,8 @@ export class Todos {
   get selectedUserTasks() {
     return this.tasks.filter((task) => task.userId === this.selectedUser);
   }
+
+  onCompleteTask(taskId: string) {
+    this.tasks = this.tasks.filter((task) => task.taskId !== taskId);
+  }
 }
