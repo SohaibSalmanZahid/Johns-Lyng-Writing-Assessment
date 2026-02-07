@@ -1,6 +1,7 @@
 <app-header />
-<main>
-  <ul>
+<div class="content-wrapper">
+  <ul class="button-group">
+    <label>Users</label>
     @for (user of users; track user.userId) {
       <app-users
         [userName]="user.userName"
@@ -9,6 +10,11 @@
       />
     }
   </ul>
-
-  <app-todos [userName]="selectedUser.userName" [userId]="selectedUser.userId" />
-</main>
+  <div style="margin-left: 3rem">
+    <app-todos
+      [userName]="selectedUser.userName"
+      [userId]="selectedUser.userId"
+      [selectedUser]="selectedUser.userId"
+    />
+  </div>
+</div>

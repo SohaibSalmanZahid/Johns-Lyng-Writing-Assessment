@@ -8,4 +8,9 @@ import { Component, Input } from '@angular/core';
 })
 export class Todo {
   @Input({ required: true }) userId!: string;
+  @Input({ required: true }) taskId!: string;
+  @Input({ required: true }) taskDescription!: string;
+  @Input({ required: true }) createdAt!: string;
+  @Input({ required: true }) dueDate!: string;
+  // @Input({ required: true }) selectedUserId!: string;
 }
