@@ -1,16 +1,20 @@
 <app-header />
-<div class="content-wrapper">
-  <ul class="button-group">
-    <label>Users</label>
-    @for (user of users; track user.userId) {
-      <app-users [user]="user" (selectedUser)="onSelectUser($event)" />
-    }
-  </ul>
-  <div style="margin-left: 3rem">
-    <app-todos
-      [userName]="selectedUser.userName"
-      [userId]="selectedUser.userId"
-      [selectedUser]="selectedUser.userId"
-    />
-  </div>
+<div class="layout">
+  <aside class="sidebar">
+    <ul class="button-group">
+      <h3>Users</h3>
+      @for (user of users; track user.userId) {
+        <app-users [user]="user" (selectedUser)="onSelectUser($event)" />
+      }
+    </ul>
+  </aside>
+  <main class="content">
+    <div class="content-inner">
+      <app-todos
+        [userName]="selectedUser.userName"
+        [userId]="selectedUser.userId"
+        [selectedUser]="selectedUser.userId"
+      />
+    </div>
+  </main>
 </div>

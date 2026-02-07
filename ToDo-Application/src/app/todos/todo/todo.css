@@ -5,4 +5,61 @@
   padding: 16px 18px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   margin: 5px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  background-color: #f3fff7;
+  color: #2ead5d;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  margin-top: 2rem;
+  min-width: 10rem;
+  border: 1px solid #c7d6ff;
+  border-radius: 12px;
+}
+
+button:hover,
+button:active,
+.active {
+  background-color: #e6f8ee;
+  color: #8fd9ab;
+}
+
+.task-field {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-label {
+  margin: 0;
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.task-value {
+  margin: 0;
+  color: #111827;
+}
+
+.task-field-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-value-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #111827;
 }

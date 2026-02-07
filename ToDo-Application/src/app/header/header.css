@@ -1,5 +1,5 @@
 header {
-  background: #d9d8dc;
+  background: #fff;
   margin-top: 0;
   display: block;
   flex-direction: column;
@@ -12,14 +12,8 @@ header {
   box-shadow: 0 1px 8px rgba(108, 108, 108, 0.6);
 }
 
-h1 {
-  font-size: 1.3rem;
-  margin: 0 0 0 3rem;
-  padding: 0;
-}
-
-p {
-  margin: 0;
-  font-size: 0.8rem;
-  text-wrap: balance;
+img {
+  width: 12rem;
+  height: 4rem;
+  margin-left: 4rem;
 }

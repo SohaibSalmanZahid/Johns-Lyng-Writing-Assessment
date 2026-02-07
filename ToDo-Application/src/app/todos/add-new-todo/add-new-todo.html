@@ -1,17 +1,27 @@
-<dialog open>
-  <h2>Add New ToDo</h2>
-  <form (ngSubmit)="onSubmitNewTask()">
-    <p>
-      <label for="title">ToDo Task</label>
-      <input id="title" type="text" name="title" [(ngModel)]="enteredTodo" />
-    </p>
-    <p>
-      <label for="dueDate">Due Date</label>
-      <input id="dueDate" type="date" name="dueDate" [(ngModel)]="enteredDueDate" />
-    </p>
-    <p>
-      <button type="button" (click)="onCancelTask()">Cancel</button>
-      <button type="submit">Create</button>
-    </p>
-  </form>
-</dialog>
+<div class="backdrop">
+  <dialog open class="todo-dialog">
+    <h2>Add New ToDo</h2>
+    <form (ngSubmit)="onSubmitNewTask()">
+      <div class="form-row">
+        <p>
+          <label for="title">ToDo Task</label>
+          <input id="title" type="text" name="title" [(ngModel)]="enteredTodo" />
+        </p>
+      </div>
+      <div class="form-row">
+        <p>
+          <label for="dueDate">Due Date</label>
+          <input id="dueDate" type="date" name="dueDate" [(ngModel)]="enteredDueDate" />
+        </p>
+      </div>
+      <div class="form-row">
+        <div class="dialog-actions">
+          <p>
+            <button type="button" (click)="onCancelTask()">Cancel</button>
+            <button type="submit" class="primary-btn">Create</button>
+          </p>
+        </div>
+      </div>
+    </form>
+  </dialog>
+</div>

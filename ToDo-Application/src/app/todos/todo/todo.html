@@ -1,7 +1,15 @@
 <section class="todo-card">
-  <h2>{{ todoTask.taskDescription }}</h2>
-  <p>{{ todoTask.createdAt }}</p>
-  <p>{{ todoTask.userId }}</p>
-  <p>{{ todoTask.dueDate }}</p>
+  <div class="task-field-title">
+    <span class="task-label">ToDo Task:</span>
+    <p class="task-value-title">{{ todoTask.taskDescription }}</p>
+  </div>
+  <div class="task-field">
+    <span class="task-label">Task Created At:</span>
+    <p class="task-value">{{ todoTask.createdAt }}</p>
+  </div>
+  <div class="task-field">
+    <span class="task-label">Task Due Date:</span>
+    <p class="task-value">{{ todoTask.dueDate }}</p>
+  </div>
   <button (click)="onCompleteTask()">Complete</button>
 </section>
