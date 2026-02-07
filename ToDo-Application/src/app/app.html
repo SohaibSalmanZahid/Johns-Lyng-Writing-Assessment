@@ -3,11 +3,7 @@
   <ul class="button-group">
     <label>Users</label>
     @for (user of users; track user.userId) {
-      <app-users
-        [userName]="user.userName"
-        [userId]="user.userId"
-        (selectedUser)="onSelectUser($event)"
-      />
+      <app-users [user]="user" (selectedUser)="onSelectUser($event)" />
     }
   </ul>
   <div style="margin-left: 3rem">

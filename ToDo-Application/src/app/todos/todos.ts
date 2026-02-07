@@ -15,7 +15,7 @@ export class Todos {
 
   tasks = DUMMY_TODOS;
 
-  get todoSubTitile() {
+  get todoSubTitle() {
     return this.userName + "'s ToDo List: ";
   }
 

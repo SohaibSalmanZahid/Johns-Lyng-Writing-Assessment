@@ -1,16 +1,10 @@
-<h2>{{ todoSubTitile }}</h2>
+<h2>{{ todoSubTitle }}</h2>
 <button>Add New ToDo Task</button>
 
 <ul>
   @for (task of selectedUserTasks; track task.taskId) {
     <li>
-      <app-todo
-        [userId]="task.userId"
-        [taskId]="task.taskId"
-        [taskDescription]="task.taskDescription"
-        [createdAt]="task.createdAt"
-        [dueDate]="task.dueDate"
-      />
+      <app-todo [todoTask]="task" />
     </li>
   }
 </ul>
