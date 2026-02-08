@@ -24,11 +24,11 @@ export class AddNewTodo {
     return this.addTodoTask.emit({
       taskDescription: this.enteredTodo,
       createdAt:
-        new Date().getDate().toString() +
+        new Date().getFullYear() +
         '-' +
-        new Date().getMonth().toString() +
+        String(new Date().getMonth() + 1).padStart(2, '0') +
         '-' +
-        new Date().getFullYear().toString(),
+        String(new Date().getDate()).padStart(2, '0'),
       dueDate: this.enteredDueDate,
     });
   }

@@ -1,9 +1,16 @@
-import { Component, DestroyRef, EventEmitter, inject, Output } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  EventEmitter,
+  inject,
+  Output,
+  ChangeDetectorRef,
+  NgZone,
+} from '@angular/core';
 import { AddUser } from './add-user/add-user';
 import { UsersList } from './users-list/users-list';
 import { UserModel } from './user.model';
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -14,15 +21,12 @@ import { ChangeDetectorRef } from '@angular/core';
 export class Users {
   private httpClient = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
-
-  //Destroy Ref
+  private cdr = inject(ChangeDetectorRef);
 
   users: UserModel[] = [];
   selectedUser?: UserModel;
 
   @Output() currentUser = new EventEmitter();
-
-  constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
     const subscription = this.httpClient
@@ -30,9 +34,13 @@ export class Users {
       .subscribe({
         next: (resData) => {
           this.users = resData;
-          console.log(resData);
+          this.cdr.detectChanges();
         },
       });
+
+    this.destroyRef.onDestroy(() => {
+      subscription.unsubscribe();
+    });
   }
 
   get userAvailable() {
@@ -55,7 +63,7 @@ export class Users {
   }
 
   onSelectUser(user: UserModel) {
-    console.log('User was clicked with an id: ' + user.userId);
+   // console.log('User was clicked with an id: ' + user.userId);
     const newuser = this.users.find((nuser) => nuser.userId === user.userId);
     if (newuser) {
       this.selectedUser = newuser;

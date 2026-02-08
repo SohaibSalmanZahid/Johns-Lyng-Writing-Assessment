@@ -1,14 +1,14 @@
 <section class="todo-card">
   <div class="task-field-title">
-    <span class="task-label">ToDo Task:</span>
+    <span class="task-label">ToDo:</span>
     <p class="task-value-title">{{ todoTask.taskDescription }}</p>
   </div>
   <div class="task-field">
-    <span class="task-label">Task Created At:</span>
+    <span class="task-label">Created At:</span>
     <p class="task-value">{{ todoTask.createdAt }}</p>
   </div>
   <div class="task-field">
-    <span class="task-label">Task Due Date:</span>
+    <span class="task-label">Due Date:</span>
     <p class="task-value">{{ todoTask.dueDate }}</p>
   </div>
   <button (click)="onCompleteTask()">Complete</button>
