@@ -10,6 +10,7 @@ import { AddUser } from './add-user/add-user';
 import { UsersList } from './users-list/users-list';
 import { UserModel } from './user.model';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-user',
@@ -29,7 +30,7 @@ export class Users {
 
   ngOnInit() {
     const subscription = this.httpClient
-      .get<UserModel[]>('http://localhost:5050/api/User')
+      .get<UserModel[]>(`${environment.apiBaseUrl}User`)
       .subscribe({
         next: (resData) => {
           this.users = resData;
@@ -48,7 +49,7 @@ export class Users {
 
   onNewUser(username: string) {
     this.httpClient
-      .post<UserModel>('http://localhost:5050/api/User', {
+      .post<UserModel>(`${environment.apiBaseUrl}User`, {
         name: username,
       })
       .subscribe({

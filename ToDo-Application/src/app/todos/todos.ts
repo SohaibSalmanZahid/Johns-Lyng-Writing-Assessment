@@ -6,11 +6,11 @@ import {
   ChangeDetectorRef,
   SimpleChanges,
 } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Todo } from './todo/todo';
 import { AddNewTodo } from './add-new-todo/add-new-todo';
 import { completeTask, NewToDo, ToDoTask } from './todo.model';
-import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-todos',
   imports: [Todo, AddNewTodo],
@@ -35,13 +35,14 @@ export class Todos {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['selectedUser'] && !changes['selectedUser'].firstChange) {
+      this.tasks = [];
       this.loadUserTasks();
     }
   }
 
   private loadUserTasks() {
     const subscription = this.httpClient
-      .get<ToDoTask[]>('http://localhost:5050/api/ToDoTask/' + this.selectedUser)
+      .get<ToDoTask[]>(`${environment.apiBaseUrl}ToDoTask/${this.userId}`)
       .subscribe({
         next: (resData) => {
           this.tasks = resData;
@@ -63,9 +64,7 @@ export class Todos {
   }
 
   onCompleteTask(taskId: string) {
-    this.httpClient
-      .delete<completeTask>('http://localhost:5050/api/ToDoTask/' + taskId)
-      .subscribe();
+    this.httpClient.delete<completeTask>(`${environment.apiBaseUrl}ToDoTask/${taskId}`).subscribe();
 
     this.tasks = this.tasks.filter((task) => task.taskId !== taskId);
   }
@@ -80,7 +79,7 @@ export class Todos {
 
   onSubmitNewTask(newTodo: NewToDo) {
     this.httpClient
-      .post<ToDoTask>('http://localhost:5050/api/ToDoTask', {
+      .post<ToDoTask>(`${environment.apiBaseUrl}ToDoTask`, {
         userId: this.userId,
         taskDescription: newTodo.taskDescription,
         dueDate: newTodo.dueDate,
