@@ -85,3 +85,10 @@ dialog {
   background: #e6f8ee;
   color: #8fd9ab;
 }
+
+.error-text {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  display: none;
+}

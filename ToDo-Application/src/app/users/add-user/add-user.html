@@ -2,6 +2,7 @@
   <p>
     <label for="username">Add User Name:</label>
     <input id="username" name="username" type="text" [(ngModel)]="enteredUsername" />
+    <small #nameerror class="error-text">Enter a Valid Name</small>
   </p>
   <p>
     <button type="submit">Add New User</button>

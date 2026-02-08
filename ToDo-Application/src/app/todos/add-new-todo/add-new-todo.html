@@ -6,12 +6,20 @@
         <p>
           <label for="title">ToDo:</label>
           <input id="title" type="text" name="title" [(ngModel)]="enteredTodo" />
+          <small #titleerror class="error-text">Enter a Valid Title</small>
         </p>
       </div>
       <div class="form-row">
         <p>
           <label for="dueDate">Due Date:</label>
-          <input id="dueDate" type="date" name="dueDate" [(ngModel)]="enteredDueDate" />
+          <input
+            id="dueDate"
+            type="date"
+            name="dueDate"
+            [min]="today"
+            [(ngModel)]="enteredDueDate"
+          />
+          <small #dateerror class="error-text">Enter a Valid Date</small>
         </p>
       </div>
       <div class="form-row">
