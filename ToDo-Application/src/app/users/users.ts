@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Output } from '@angular/core';
 import { AddUser } from './add-user/add-user';
 import { UsersList } from './users-list/users-list';
 import { UserModel } from './user.model';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-user',
@@ -10,20 +12,46 @@ import { UserModel } from './user.model';
   styleUrl: './users.css',
 })
 export class Users {
+  private httpClient = inject(HttpClient);
+  private destroyRef = inject(DestroyRef);
+
+  //Destroy Ref
+
   users: UserModel[] = [];
   selectedUser?: UserModel;
 
   @Output() currentUser = new EventEmitter();
+
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  ngOnInit() {
+    const subscription = this.httpClient
+      .get<UserModel[]>('http://localhost:5050/api/User')
+      .subscribe({
+        next: (resData) => {
+          this.users = resData;
+          console.log(resData);
+        },
+      });
+  }
 
   get userAvailable() {
     return this.users.length;
   }
 
   onNewUser(username: string) {
-    this.users.push({
-      userId: new Date().getMilliseconds().toString(),
-      userName: username,
-    });
+    this.httpClient
+      .post<UserModel>('http://localhost:5050/api/User', {
+        name: username,
+      })
+      .subscribe({
+        next: (resData) => {
+          this.users = [...this.users, resData];
+          this.cdr.markForCheck();
+        },
+      });
+
+    // console.log(this.users);
   }
 
   onSelectUser(user: UserModel) {
