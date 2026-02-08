@@ -11,3 +11,9 @@ export interface NewToDo {
   createdAt: string;
   dueDate: string;
 }
+
+export interface completeTask {
+  statusCode: string;
+  message: string;
+  todoTaskId: string;
+}

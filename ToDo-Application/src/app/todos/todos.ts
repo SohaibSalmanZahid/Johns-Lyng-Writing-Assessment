@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Todo } from './todo/todo';
 import { AddNewTodo } from './add-new-todo/add-new-todo';
-import { NewToDo, ToDoTask } from './todo.model';
+import { completeTask, NewToDo, ToDoTask } from './todo.model';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -34,7 +34,6 @@ export class Todos {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    // Reload tasks whenever selectedUser changes
     if (changes['selectedUser'] && !changes['selectedUser'].firstChange) {
       this.loadUserTasks();
     }
@@ -46,7 +45,6 @@ export class Todos {
       .subscribe({
         next: (resData) => {
           this.tasks = resData;
-          console.log(resData);
           this.cdr.detectChanges();
         },
       });
@@ -61,11 +59,14 @@ export class Todos {
   }
 
   get selectedUserTasks() {
-    // return this.tasks.filter((task) => task.userId === this.selectedUser);
     return this.tasks;
   }
 
   onCompleteTask(taskId: string) {
+    this.httpClient
+      .delete<completeTask>('http://localhost:5050/api/ToDoTask/' + taskId)
+      .subscribe();
+
     this.tasks = this.tasks.filter((task) => task.taskId !== taskId);
   }
 

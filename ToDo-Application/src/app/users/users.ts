@@ -5,7 +5,6 @@ import {
   inject,
   Output,
   ChangeDetectorRef,
-  NgZone,
 } from '@angular/core';
 import { AddUser } from './add-user/add-user';
 import { UsersList } from './users-list/users-list';
@@ -58,12 +57,9 @@ export class Users {
           this.cdr.markForCheck();
         },
       });
-
-    // console.log(this.users);
   }
 
   onSelectUser(user: UserModel) {
-   // console.log('User was clicked with an id: ' + user.userId);
     const newuser = this.users.find((nuser) => nuser.userId === user.userId);
     if (newuser) {
       this.selectedUser = newuser;
