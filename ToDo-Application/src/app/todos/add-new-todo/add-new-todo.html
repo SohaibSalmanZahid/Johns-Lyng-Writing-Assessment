@@ -5,7 +5,13 @@
       <div class="form-row">
         <p>
           <label for="title">ToDo:</label>
-          <input id="title" type="text" name="title" [(ngModel)]="enteredTodo" />
+          <input
+            id="title"
+            type="text"
+            name="title"
+            placeholder="What needs to be done?"
+            [(ngModel)]="enteredTodo"
+          />
           <small #titleerror class="error-text">Enter a Valid Title</small>
         </p>
       </div>
