@@ -9,7 +9,21 @@
 <h2>{{ todoSubTitle }}</h2>
 <button (click)="onStartAddNewToDo()">Add New ToDo Task</button>
 
-<ul>
+@if (isLoadingTask && !errorMessage) {
+  <p>Loading User Tasks...</p>
+}
+
+@if (isAddingNewTask && !errorMessage) {
+  <p>Adding New User Task...</p>
+}
+@if (isDeletingTask && !errorMessage) {
+  <p>Completing User Task...</p>
+}
+
+@if (errorMessage) {
+  <p class="fallback-text">{{ errorMessage }}</p>
+}
+<ul class="todolist-group">
   @for (task of selectedUserTasks; track task.taskId) {
     <li>
       <app-todo [todoTask]="task" (taskCompleted)="onCompleteTask($event)" />

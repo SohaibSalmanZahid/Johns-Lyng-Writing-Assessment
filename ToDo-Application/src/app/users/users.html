@@ -1,5 +1,16 @@
 <app-add-user (username)="onNewUser($event)" />
 
+@if (isFetchingUsers && !errorMessage) {
+  <p>Fetching Users...</p>
+}
+
+@if (isAddingUser && !errorMessage) {
+  <p>Adding New User...</p>
+}
+
+@if (errorMessage) {
+  <p class="fallback-text">{{ errorMessage }}</p>
+}
 @if (userAvailable > 0) {
   <ul class="button-group">
     <h3>User List:</h3>

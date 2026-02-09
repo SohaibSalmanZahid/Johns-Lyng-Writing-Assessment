@@ -28,6 +28,10 @@ export class Todos {
 
   isAddingNewTask = false;
   tasks: ToDoTask[] = [];
+  errorMessage = '';
+  isLoadingTask = false;
+  isDeletingTask = false;
+  isAddingTask = false;
 
   ngOnInit() {
     this.loadUserTasks();
@@ -41,11 +45,20 @@ export class Todos {
   }
 
   private loadUserTasks() {
+    this.isLoadingTask = true;
     const subscription = this.httpClient
       .get<ToDoTask[]>(`${environment.apiBaseUrl}ToDoTask/${this.userId}`)
       .subscribe({
         next: (resData) => {
           this.tasks = resData;
+          this.cdr.detectChanges();
+        },
+        error: (e) => {
+          this.errorMessage = 'Something went wrong loading user tasks. Please try again later!';
+          console.log(e.message);
+        },
+        complete: () => {
+          this.isLoadingTask = false;
           this.cdr.detectChanges();
         },
       });
@@ -64,7 +77,17 @@ export class Todos {
   }
 
   onCompleteTask(taskId: string) {
-    this.httpClient.delete<completeTask>(`${environment.apiBaseUrl}ToDoTask/${taskId}`).subscribe();
+    this.isDeletingTask = true;
+    this.httpClient.delete<completeTask>(`${environment.apiBaseUrl}ToDoTask/${taskId}`).subscribe({
+      error: (e) => {
+        this.errorMessage = 'Something went wrong completing task. PLease try again later!';
+        console.log(e.message);
+      },
+      complete: () => {
+        this.isDeletingTask = false;
+        this.cdr.markForCheck();
+      },
+    });
 
     this.tasks = this.tasks.filter((task) => task.taskId !== taskId);
   }
@@ -78,6 +101,7 @@ export class Todos {
   }
 
   onSubmitNewTask(newTodo: NewToDo) {
+    this.isAddingNewTask = true;
     this.httpClient
       .post<ToDoTask>(`${environment.apiBaseUrl}ToDoTask`, {
         userId: this.userId,
@@ -88,6 +112,14 @@ export class Todos {
       .subscribe({
         next: (resData) => {
           this.tasks = [...this.tasks, resData];
+          this.cdr.markForCheck();
+        },
+        error: (e) => {
+          this.errorMessage = 'Something went wrong adding the new task. Please try again later!';
+          console.log(e.message);
+        },
+        complete: () => {
+          this.isAddingNewTask = false;
           this.cdr.markForCheck();
         },
       });

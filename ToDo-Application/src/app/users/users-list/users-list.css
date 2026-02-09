@@ -4,6 +4,7 @@ button {
   gap: 0.5rem;
   padding: 0.35rem 0.5rem;
   background-color: #f2f6ff;
+  justify-content: center;
   color: #1f4ed8;
   border: none;
   font: inherit;

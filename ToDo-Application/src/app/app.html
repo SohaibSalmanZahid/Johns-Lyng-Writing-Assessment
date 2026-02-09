@@ -2,13 +2,6 @@
 <div class="layout">
   <aside class="sidebar">
     <app-user (currentUser)="onSelectUser($event)" />
-
-    <!-- <ul class="button-group">
-      <h3>Users</h3>
-      @for (user of users; track user.userId) {
-        <app-users [user]="user" (selectedUser)="onSelectUser($event)" />
-      }
-    </ul> -->
   </aside>
   <main class="content">
     <div class="content-inner">

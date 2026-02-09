@@ -25,16 +25,28 @@ export class Users {
 
   users: UserModel[] = [];
   selectedUser?: UserModel;
+  isFetchingUsers = false;
+  isAddingUser = false;
+  errorMessage = '';
 
   @Output() currentUser = new EventEmitter();
 
   ngOnInit() {
+    this.isFetchingUsers = true;
     const subscription = this.httpClient
       .get<UserModel[]>(`${environment.apiBaseUrl}User`)
       .subscribe({
         next: (resData) => {
           this.users = resData;
           this.cdr.detectChanges();
+        },
+        error: (e) => {
+          this.errorMessage = 'Something went wrong fetching Users. Please try again later!';
+          console.log(e.message);
+          this.isFetchingUsers = false;
+        },
+        complete: () => {
+          this.isFetchingUsers = false;
         },
       });
 
@@ -48,6 +60,8 @@ export class Users {
   }
 
   onNewUser(username: string) {
+    this.errorMessage = '';
+    this.isAddingUser = true;
     this.httpClient
       .post<UserModel>(`${environment.apiBaseUrl}User`, {
         name: username,
@@ -56,6 +70,14 @@ export class Users {
         next: (resData) => {
           this.users = [...this.users, resData];
           this.cdr.markForCheck();
+        },
+        error: (error) => {
+          this.errorMessage = 'Something went wrong adding a new user. Please try again later!';
+          console.log(error.message);
+          this.cdr.detectChanges();
+        },
+        complete: () => {
+          this.isAddingUser = false;
         },
       });
   }

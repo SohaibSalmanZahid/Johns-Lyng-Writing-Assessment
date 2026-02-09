@@ -19,3 +19,12 @@ button:active,
   background-color: #c5d5f9;
   color: #1f4ed8;
 }
+
+.todolist-group {
+  list-style: none;
+  padding-left: 0;
+}
+
+.fallback-text {
+  color: rgb(198, 51, 51);
+}

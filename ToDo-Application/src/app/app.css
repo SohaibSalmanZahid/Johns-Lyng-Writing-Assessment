@@ -32,3 +32,36 @@
   gap: 8px;
   align-items: flex-start;
 }
+
+@media (max-width: 1024px) {
+  .layout {
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .sidebar {
+    width: 220px;
+    flex: 0 0 220px;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    width: 100%;
+    flex: none;
+    height: auto;
+  }
+
+  .content {
+    height: auto;
+  }
+
+  .content-inner {
+    padding-right: 0;
+  }
+}
