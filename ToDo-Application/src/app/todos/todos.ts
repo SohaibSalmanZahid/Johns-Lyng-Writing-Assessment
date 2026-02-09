@@ -83,7 +83,7 @@ export class Todos {
     this.isDeletingTask = true;
     this.todosService.completeUserTask(taskId).subscribe({
       error: (e) => {
-        this.errorMessage = 'Something went wrong while completing task. PLease try again later!';
+        this.errorMessage = 'Something went wrong while completing task. Please try again later!';
         console.log(e.message);
         this.cdr.detectChanges();
       },
