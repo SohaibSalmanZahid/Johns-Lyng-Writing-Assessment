@@ -23,10 +23,15 @@
 @if (errorMessage) {
   <p class="fallback-text">{{ errorMessage }}</p>
 }
-<ul class="todolist-group">
-  @for (task of selectedUserTasks; track task.taskId) {
-    <li>
-      <app-todo [todoTask]="task" (taskCompleted)="onCompleteTask($event)" />
-    </li>
-  }
-</ul>
+
+@if (selectedUserTasks.length > 0) {
+  <ul class="todolist-group">
+    @for (task of selectedUserTasks; track task.taskId) {
+      <li>
+        <app-todo [todoTask]="task" (taskCompleted)="onCompleteTask($event)" />
+      </li>
+    }
+  </ul>
+} @else if (selectedUserTasks.length === 0 && !errorMessage) {
+  <p class="task-fallback">No tasks found. Click ‘Add New ToDo Task’ to get started.</p>
+}

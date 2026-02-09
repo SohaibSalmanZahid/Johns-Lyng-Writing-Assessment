@@ -58,7 +58,8 @@
               "buildTarget": "ToDo-Application:build:production"
             },
             "development": {
-              "buildTarget": "ToDo-Application:build:development"
+              "buildTarget": "ToDo-Application:build:development",
+              "port": 4200
             }
           },
           "defaultConfiguration": "development"

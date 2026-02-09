@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Todo } from './todo/todo';
 import { AddNewTodo } from './add-new-todo/add-new-todo';
-import { NewToDo, ToDoTask } from './todo.model';
+import { NewToDoModel, ToDoTaskModel } from './todo.model';
 import { TodosService } from './todos.service';
 import { Subscription } from 'rxjs';
 @Component({
@@ -28,7 +28,7 @@ export class Todos {
   private loadTasksSubscription?: Subscription;
 
   isAddingNewTask = false;
-  tasks: ToDoTask[] = [];
+  tasks: ToDoTaskModel[] = [];
   errorMessage = '';
   isLoadingTask = false;
   isDeletingTask = false;
@@ -103,7 +103,7 @@ export class Todos {
     this.isAddingNewTask = false;
   }
 
-  onSubmitNewTask(newTodo: NewToDo) {
+  onSubmitNewTask(newTodo: NewToDoModel) {
     this.isAddingNewTask = true;
     this.todosService
       .addNewUserTask(this.userId, newTodo.taskDescription, newTodo.dueDate, newTodo.createdAt)

@@ -1,4 +1,4 @@
-export interface ToDoTask {
+export interface ToDoTaskModel {
   userId: string;
   taskId: string;
   taskDescription: string;
@@ -6,13 +6,13 @@ export interface ToDoTask {
   dueDate: string;
 }
 
-export interface NewToDo {
+export interface NewToDoModel {
   taskDescription: string;
   createdAt: string;
   dueDate: string;
 }
 
-export interface CompleteTask {
+export interface CompleteTaskModel {
   statusCode: string;
   message: string;
   todoTaskId: string;

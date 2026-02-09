@@ -28,3 +28,9 @@ button:active,
 .fallback-text {
   color: rgb(198, 51, 51);
 }
+
+.task-fallback {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}

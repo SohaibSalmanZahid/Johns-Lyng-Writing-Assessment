@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NewToDo } from '../todo.model';
+import { NewToDoModel } from '../todo.model';
 
 @Component({
   selector: 'app-add-new-todo',
@@ -11,7 +11,7 @@ import { NewToDo } from '../todo.model';
 export class AddNewTodo {
   @Input({ required: true }) selectedUserId!: string;
   @Output() cancelTask = new EventEmitter();
-  @Output() addTodoTask = new EventEmitter<NewToDo>();
+  @Output() addTodoTask = new EventEmitter<NewToDoModel>();
   @ViewChild('titleerror') titleError!: ElementRef<HTMLDivElement>;
   @ViewChild('dateerror') dateError!: ElementRef<HTMLDivElement>;
 
@@ -35,6 +35,7 @@ export class AddNewTodo {
 
     this.dateError.nativeElement.style.display = 'none';
     this.titleError.nativeElement.style.display = 'none';
+
     return this.addTodoTask.emit({
       taskDescription: this.enteredTodo,
       createdAt:
