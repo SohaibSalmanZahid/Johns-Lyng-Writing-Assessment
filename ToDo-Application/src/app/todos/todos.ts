@@ -10,6 +10,7 @@ import { Todo } from './todo/todo';
 import { AddNewTodo } from './add-new-todo/add-new-todo';
 import { NewToDo, ToDoTask } from './todo.model';
 import { TodosService } from './todos.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-todos',
   imports: [Todo, AddNewTodo],
@@ -24,6 +25,7 @@ export class Todos {
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
   private todosService = inject(TodosService);
+  private loadTasksSubscription?: Subscription;
 
   isAddingNewTask = false;
   tasks: ToDoTask[] = [];
@@ -44,24 +46,28 @@ export class Todos {
   }
 
   private loadUserTasks() {
+    if (this.loadTasksSubscription) {
+      this.loadTasksSubscription.unsubscribe();
+    }
+
     this.isLoadingTask = true;
-    const subscription = this.todosService.loadUserTasks(this.userId).subscribe({
+    const loadTasksSubscription = this.todosService.loadUserTasks(this.userId).subscribe({
       next: (resData) => {
         this.tasks = resData;
+        this.isLoadingTask = false;
         this.cdr.detectChanges();
       },
       error: (e) => {
-        this.errorMessage = 'Something went wrong loading user tasks. Please try again later!';
+        this.errorMessage =
+          'Something went wrong while fetching user tasks. Please try again later!';
         console.log(e.message);
-      },
-      complete: () => {
         this.isLoadingTask = false;
         this.cdr.detectChanges();
       },
     });
 
     this.destroyRef.onDestroy(() => {
-      subscription.unsubscribe();
+      this.loadTasksSubscription?.unsubscribe();
     });
   }
 
@@ -77,16 +83,16 @@ export class Todos {
     this.isDeletingTask = true;
     this.todosService.completeUserTask(taskId).subscribe({
       error: (e) => {
-        this.errorMessage = 'Something went wrong completing task. PLease try again later!';
+        this.errorMessage = 'Something went wrong while completing task. PLease try again later!';
         console.log(e.message);
+        this.cdr.detectChanges();
       },
       complete: () => {
         this.isDeletingTask = false;
+        this.tasks = this.tasks.filter((task) => task.taskId !== taskId);
         this.cdr.markForCheck();
       },
     });
-
-    this.tasks = this.tasks.filter((task) => task.taskId !== taskId);
   }
 
   onStartAddNewToDo() {
@@ -104,15 +110,15 @@ export class Todos {
       .subscribe({
         next: (resData) => {
           this.tasks = [...this.tasks, resData];
-          this.cdr.markForCheck();
+          this.isAddingNewTask = false;
+          this.cdr.detectChanges();
         },
         error: (e) => {
-          this.errorMessage = 'Something went wrong adding the new task. Please try again later!';
+          this.errorMessage =
+            'Something went wrong while adding the new task. Please try again later!';
           console.log(e.message);
-        },
-        complete: () => {
           this.isAddingNewTask = false;
-          this.cdr.markForCheck();
+          this.cdr.detectChanges();
         },
       });
     this.isAddingNewTask = false;

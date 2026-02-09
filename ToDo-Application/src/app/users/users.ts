@@ -35,15 +35,15 @@ export class Users {
     const subscription = this.usersService.loadUsers().subscribe({
       next: (resData) => {
         this.users = resData;
+        this.isFetchingUsers = false;
         this.cdr.detectChanges();
       },
       error: (e) => {
-        this.errorMessage = 'Something went wrong fetching Users. Please try again later!';
+        this.errorMessage = 'Something went wrong while fetching users. Please try again later!';
         console.log(e.message);
         this.isFetchingUsers = false;
-      },
-      complete: () => {
-        this.isFetchingUsers = false;
+
+        this.cdr.detectChanges();
       },
     });
 
@@ -62,15 +62,14 @@ export class Users {
     this.usersService.addNewUser(username).subscribe({
       next: (resData) => {
         this.users = [...this.users, resData];
+        this.isAddingUser = false;
         this.cdr.markForCheck();
       },
       error: (error) => {
-        this.errorMessage = 'Something went wrong adding a new user. Please try again later!';
+        this.errorMessage = 'Something went wrong while adding a new user. Please try again later!';
         console.log(error.message);
-        this.cdr.detectChanges();
-      },
-      complete: () => {
         this.isAddingUser = false;
+        this.cdr.detectChanges();
       },
     });
   }

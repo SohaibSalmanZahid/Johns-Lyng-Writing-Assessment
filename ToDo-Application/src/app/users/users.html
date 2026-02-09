@@ -18,4 +18,6 @@
       <app-users-list [user]="user" (selectedUser)="onSelectUser($event)" />
     }
   </ul>
+} @else if (userAvailable === 0 && !errorMessage) {
+  <p class="user-fallback">No User Found</p>
 }

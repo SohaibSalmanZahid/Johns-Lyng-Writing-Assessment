@@ -5,3 +5,8 @@
 .fallback-text {
   color: rgb(198, 51, 51);
 }
+
+.user-fallback {
+  text-align: center;
+  margin-top: 3rem;
+}
