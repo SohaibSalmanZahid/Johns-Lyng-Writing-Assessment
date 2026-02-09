@@ -12,7 +12,7 @@ export interface NewToDo {
   dueDate: string;
 }
 
-export interface completeTask {
+export interface CompleteTask {
   statusCode: string;
   message: string;
   todoTaskId: string;

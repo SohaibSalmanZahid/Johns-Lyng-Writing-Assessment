@@ -6,11 +6,10 @@ import {
   ChangeDetectorRef,
   SimpleChanges,
 } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Todo } from './todo/todo';
 import { AddNewTodo } from './add-new-todo/add-new-todo';
-import { completeTask, NewToDo, ToDoTask } from './todo.model';
-import { environment } from '../../environments/environment';
+import { NewToDo, ToDoTask } from './todo.model';
+import { TodosService } from './todos.service';
 @Component({
   selector: 'app-todos',
   imports: [Todo, AddNewTodo],
@@ -22,9 +21,9 @@ export class Todos {
   @Input({ required: true }) userId!: string;
   @Input({ required: true }) selectedUser!: string;
 
-  private httpClient = inject(HttpClient);
   private destroyRef = inject(DestroyRef);
   private cdr = inject(ChangeDetectorRef);
+  private todosService = inject(TodosService);
 
   isAddingNewTask = false;
   tasks: ToDoTask[] = [];
@@ -46,22 +45,20 @@ export class Todos {
 
   private loadUserTasks() {
     this.isLoadingTask = true;
-    const subscription = this.httpClient
-      .get<ToDoTask[]>(`${environment.apiBaseUrl}ToDoTask/${this.userId}`)
-      .subscribe({
-        next: (resData) => {
-          this.tasks = resData;
-          this.cdr.detectChanges();
-        },
-        error: (e) => {
-          this.errorMessage = 'Something went wrong loading user tasks. Please try again later!';
-          console.log(e.message);
-        },
-        complete: () => {
-          this.isLoadingTask = false;
-          this.cdr.detectChanges();
-        },
-      });
+    const subscription = this.todosService.loadUserTasks(this.userId).subscribe({
+      next: (resData) => {
+        this.tasks = resData;
+        this.cdr.detectChanges();
+      },
+      error: (e) => {
+        this.errorMessage = 'Something went wrong loading user tasks. Please try again later!';
+        console.log(e.message);
+      },
+      complete: () => {
+        this.isLoadingTask = false;
+        this.cdr.detectChanges();
+      },
+    });
 
     this.destroyRef.onDestroy(() => {
       subscription.unsubscribe();
@@ -78,7 +75,7 @@ export class Todos {
 
   onCompleteTask(taskId: string) {
     this.isDeletingTask = true;
-    this.httpClient.delete<completeTask>(`${environment.apiBaseUrl}ToDoTask/${taskId}`).subscribe({
+    this.todosService.completeUserTask(taskId).subscribe({
       error: (e) => {
         this.errorMessage = 'Something went wrong completing task. PLease try again later!';
         console.log(e.message);
@@ -102,13 +99,8 @@ export class Todos {
 
   onSubmitNewTask(newTodo: NewToDo) {
     this.isAddingNewTask = true;
-    this.httpClient
-      .post<ToDoTask>(`${environment.apiBaseUrl}ToDoTask`, {
-        userId: this.userId,
-        taskDescription: newTodo.taskDescription,
-        dueDate: newTodo.dueDate,
-        createdAt: newTodo.createdAt,
-      })
+    this.todosService
+      .addNewUserTask(this.userId, newTodo.taskDescription, newTodo.dueDate, newTodo.createdAt)
       .subscribe({
         next: (resData) => {
           this.tasks = [...this.tasks, resData];
